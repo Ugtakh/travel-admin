@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -18,20 +20,28 @@ import {
   AppConversionRates,
 } from '../sections/@dashboard/app';
 
+import { AuthContext } from '../context/authContext';
+
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
 
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Azure Dashboard </title>
       </Helmet>
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Сайн уу байна уу? - Тавтай морил - {user.name}
         </Typography>
 
         <Grid container spacing={3}>
